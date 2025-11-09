@@ -44,7 +44,7 @@
   <!-- En-tête flottant -->
   <div class="header">
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_iav.png" alt="Logo IAV">
-    <span style="margin-left: 10px; font-weight: bold; color: #1a2a40;">Landsat Multispectral - Italie</span>
+    <span style="margin-left: 10px; font-weight: bold; color: #1a2a40;">Landsat Multispectral</span>
   </div>
 
   <!-- Carte -->
@@ -59,13 +59,13 @@
       attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    // === VOS VRAIES COORDONNÉES ===
+    // === VOS COORDONNÉES EXACTES DMS ===
     const bounds = [
-      [45.5859, 12.1699],  // Nord-Ouest (Upper Left: 45°35'9.36"N, 12°10'11.80"E)
-      [45.4092, 12.4629]   // Sud-Est (Lower Right: 45°24'1.96"N, 12°27'45.93"E)
+      [45.585933, 12.169944],  // Upper Left: 45°35'9.36"N, 12°10'11.80"E
+      [45.409433, 12.462758]   // Lower Right: 45°24'1.96"N, 12°27'45.93"E
     ];
 
-    console.log("Cadre positionné avec:", bounds);
+    console.log("Cadre positionné avec les coordonnées:", bounds);
 
     // Image Landsat
     const landsatOverlay = L.imageOverlay("0.png", bounds).addTo(map);
