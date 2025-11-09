@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Image Landsat Multispectrale</title>
 
-  <!-- Leaflet -->
+  <!-- Leaflet depuis CDN -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -59,16 +59,18 @@
       attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    // === VOS COORDONNÉES EXACTES DMS ===
+    // Vos coordonnées exactes
     const bounds = [
-      [45.585933, 12.169944],  // Upper Left: 45°35'9.36"N, 12°10'11.80"E
-      [45.409433, 12.462758]   // Lower Right: 45°24'1.96"N, 12°27'45.93"E
+      [45.585933, 12.169944],  // Upper Left
+      [45.409433, 12.462758]   // Lower Right
     ];
 
-    console.log("Cadre positionné avec les coordonnées:", bounds);
+    // === CHEMIN CORRIGÉ POUR GITHUB ===
+    // Si vos tuiles sont dans un dossier "tiles/"
+    const imageUrl = "tiles/0.png";  // ou "./tiles/0.png"
 
     // Image Landsat
-    const landsatOverlay = L.imageOverlay("0.png", bounds).addTo(map);
+    const landsatOverlay = L.imageOverlay(imageUrl, bounds).addTo(map);
     
     // Ajuster la vue sur l'image
     map.fitBounds(bounds);
@@ -99,6 +101,15 @@
     
     // Contrôle plein écran
     L.control.fullscreen().addTo(map);
+
+    // Vérification du chargement
+    landsatOverlay.on('load', function() {
+      console.log("✅ Image chargée avec succès");
+    });
+    
+    landsatOverlay.on('error', function() {
+      console.log("❌ Erreur de chargement de l'image");
+    });
   </script>
 </body>
 </html>
