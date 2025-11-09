@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Cours Web Mapping - Exercice 3</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Plugins -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.css" />
+  <script src="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen/Control.FullScreen.css" />
+  <script src="https://unpkg.com/leaflet.fullscreen/Control.FullScreen.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #1a2a40;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background: #1a2a40;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      border-bottom: 5px solid #000;
+    }
+
+    header img {
+      height: 60px;
+      vertical-align: middle;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 8px 0 0 0;
+    }
+
+    h2 {
+      font-size: 16px;
+      font-weight: normal;
+      margin-top: 3px;
+      color: #dcdcdc;
+    }
+
+    /* Carte */
+    #map {
+      flex: 1;
+      height: 100%;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <!-- EN-TÊTE SIMPLE -->
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_iav.png" alt="Logo IAV">
+    <h1>Cours Web Mapping - Exercice 3</h1>
+    <h2>Image Landsat Multispectrale</h2>
+  </header>
+
+  <!-- CARTE PLEINE PAGE -->
+  <div id="map"></div>
+
+  <script>
+    // Initialisation de la carte
+    const map = L.map('map', {
+      center: [44.5108, -88.0239],
+      zoom: 16,
+      fullscreenControl: true
+    });
+
+    // Fond OSM
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Délimitation du GeoTIFF
+    const bounds = [
+      [44.5109, -88.0242], // Nord-Ouest
+      [44.5096, -88.0223]  // Sud-Est
+    ];
+
+    // Image orthophoto
+    const overlay = L.imageOverlay("0.png", bounds).addTo(map);
+    map.fitBounds(bounds);
+
+    // Cadre noir
+    L.rectangle(bounds, { color: "black", weight: 3, fill: false }).addTo(map);
+
+    // Popup
+    overlay.bindPopup("📷 Image Landsat multispectrale affichée en RGB").openPopup();
+
+    // MiniMap
+    const miniMapLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 0, maxZoom: 13 });
+    new L.Control.MiniMap(miniMapLayer, { toggleDisplay: true, minimized: false }).addTo(map);
+
+    // Barre d'échelle
+    L.control.scale().addTo(map);
+  </script>
+</body>
+</html>
