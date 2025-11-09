@@ -52,18 +52,20 @@
 
   <script>
     // Initialisation de la carte
-    const map = L.map('map').setView([45.29, 12.31], 12);
+    const map = L.map('map');
 
     // Fond de carte
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    // === VOS COORDONNÉES EXACTES ===
+    // === VOS VRAIES COORDONNÉES ===
     const bounds = [
-      [45.5859, 12.1699],  // Nord-Ouest (45°35'9.36"N, 12°10'11.80"E)
-      [45.4092, 12.4629]   // Sud-Est (45°24'1.96"N, 12°27'45.93"E)
+      [45.5859, 12.1699],  // Nord-Ouest (Upper Left: 45°35'9.36"N, 12°10'11.80"E)
+      [45.4092, 12.4629]   // Sud-Est (Lower Right: 45°24'1.96"N, 12°27'45.93"E)
     ];
+
+    console.log("Cadre positionné avec:", bounds);
 
     // Image Landsat
     const landsatOverlay = L.imageOverlay("0.png", bounds).addTo(map);
@@ -83,11 +85,9 @@
       <div style="text-align: center;">
         <b>🛰️ Image Landsat Multispectrale</b><br>
         <hr style="margin: 5px 0;">
-        <b>Emprise:</b><br>
-        Nord: 45°35'9.36"N<br>
-        Sud: 45°24'1.96"N<br>
-        Ouest: 12°10'11.80"E<br> 
-        Est: 12°27'45.93"E<br>
+        <b>Coordonnées exactes:</b><br>
+        Nord-Ouest: 45°35'9.36"N, 12°10'11.80"E<br>
+        Sud-Est: 45°24'1.96"N, 12°27'45.93"E<br>
         <hr style="margin: 5px 0;">
         <b>Dimensions:</b> 791 × 655 pixels<br>
         <b>Projection:</b> UTM 32N WGS84
